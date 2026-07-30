@@ -21,8 +21,8 @@ export function getRouteInformation(userLat, userLng, destinationHeritage) {
       walkMinutes,
       calories,
       recommendationText: `🎯 거리 ${dist.toFixed(2)}km로 2km 이내입니다! 건강하게 걸어가는 것을 추천해요.`,
-      kakaoMapUrl: `https://map.kakao.com/?sName=${encodeURIComponent('내 위치')}&sY=${userLat}&sX=${userLng}&eName=${encodeURIComponent(destinationHeritage.name)}&eY=${destLat}&eX=${destLng}`,
-      kakaoNaviUrl: `https://map.kakao.com/?sName=${encodeURIComponent('내 위치')}&sY=${userLat}&sX=${userLng}&eName=${encodeURIComponent(destinationHeritage.name)}&eY=${destLat}&eX=${destLng}`
+      kakaoMapUrl: `https://map.kakao.com/link/to/${encodeURIComponent(destinationHeritage.name)},${destLat},${destLng}`,
+      kakaoNaviUrl: `https://map.kakao.com/link/to/${encodeURIComponent(destinationHeritage.name)},${destLat},${destLng}`
     };
   } 
   // 2km 초과 시 대중교통/자동차 추천
@@ -32,8 +32,8 @@ export function getRouteInformation(userLat, userLng, destinationHeritage) {
       isWalking: false,
       distanceKm: dist.toFixed(2),
       recommendationText: `🚌 거리 ${dist.toFixed(2)}km로 도보 2km를 초과합니다. 카카오맵 길찾기를 이용해 보세요!`,
-      kakaoMapUrl: `https://map.kakao.com/?sName=${encodeURIComponent('내 위치')}&sY=${userLat}&sX=${userLng}&eName=${encodeURIComponent(destinationHeritage.name)}&eY=${destLat}&eX=${destLng}`,
-      kakaoNaviUrl: `https://map.kakao.com/?sName=${encodeURIComponent('내 위치')}&sY=${userLat}&sX=${userLng}&eName=${encodeURIComponent(destinationHeritage.name)}&eY=${destLat}&eX=${destLng}`
+      kakaoMapUrl: `https://map.kakao.com/link/to/${encodeURIComponent(destinationHeritage.name)},${destLat},${destLng}`,
+      kakaoNaviUrl: `https://map.kakao.com/link/to/${encodeURIComponent(destinationHeritage.name)},${destLat},${destLng}`
     };
   }
 }
