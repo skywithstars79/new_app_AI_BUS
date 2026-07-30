@@ -37,8 +37,8 @@ export default function CitySelector({ selectedCityId, onSelectCity }) {
                   : '1.5px solid #a7f3d0',
                 color: isSelected ? '#ffffff' : '#047857',
                 borderRadius: '20px',
-                width: '64px', // 너비 축소
-                height: '108px', // 50*2 + 8
+                width: '64px',
+                height: '56px', // 1줄 높이에 맞게 대폭 축소
                 fontSize: '0.75rem', 
                 fontWeight: 800,
                 cursor: 'pointer',
@@ -65,17 +65,17 @@ export default function CitySelector({ selectedCityId, onSelectCity }) {
               }}
             >
               <Navigation size={18} color={isSelected ? '#fff' : '#059669'} />
-              <span style={{ textAlign: 'center', lineHeight: 1.2 }}>내 주변<br/>(5km)</span>
+              <span style={{ textAlign: 'center', lineHeight: 1.2 }}>내 주변(5km)</span>
             </button>
           );
         })}
 
-        {/* 나머지 지역: 2줄 바둑판(그리드) 배치 */}
+        {/* 나머지 지역: 1줄 가로 스크롤(높이 최소화) */}
         <div style={{ 
           display: 'grid', 
-          gridTemplateRows: 'repeat(2, 1fr)', 
+          gridTemplateRows: '1fr', // 2줄에서 1줄로 변경하여 높이 절반으로 단축
           gridAutoFlow: 'column', 
-          gap: '8px',
+          gap: '6px',
           alignItems: 'center'
         }}>
           {GYEONGGI_CITIES.filter(c => c.id !== 'all').map((city) => {

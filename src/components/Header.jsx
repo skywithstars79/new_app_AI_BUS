@@ -5,18 +5,18 @@ import CitySelector from './CitySelector';
 export default function Header({ onSearch, onOpenApiKeyModal, isAiSearching, onGoHome, onOpenAiPanel, selectedCityId, onSelectCity, is500Loaded }) {
   return (
     <header className="glass-panel" style={{
-      margin: '12px 20px 8px 20px',
-      padding: '10px 16px', // 패딩 축소하여 공간 낭비 방지
+      margin: '8px 12px 4px 12px', // 여백 최소화
+      padding: '8px 12px', // 패딩 최소화
       zIndex: 10,
       background: 'rgba(255, 255, 255, 0.85)',
       backdropFilter: 'blur(20px)',
       border: '1px solid rgba(255, 255, 255, 0.6)',
-      borderRadius: '28px',
+      borderRadius: '24px',
       boxShadow: '0 10px 40px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0,0,0,0.05)',
       display: 'flex',
       alignItems: 'stretch',
-      flexWrap: 'wrap', // 모바일에서 줄바꿈 허용
-      gap: '16px'
+      flexWrap: 'wrap', 
+      gap: '8px' // 16px에서 8px로 간격 대폭 축소
     }}>
 
       {/* 1. LEFT COLUMN: Brand (HTML 텍스트 로고 원복) */}
@@ -54,7 +54,7 @@ export default function Header({ onSearch, onOpenApiKeyModal, isAiSearching, onG
         overflow: 'hidden', // 스크롤바가 부모를 뚫지 못하게 컷팅
         background: 'rgba(241, 245, 249, 0.6)', 
         borderRadius: '20px',
-        padding: '8px', 
+        padding: '4px', // 모바일 공간 절약을 위해 패딩 극한 축소
         display: 'flex',
         alignItems: 'center',
         border: '1px solid rgba(226, 232, 240, 0.8)'
@@ -125,7 +125,7 @@ export default function Header({ onSearch, onOpenApiKeyModal, isAiSearching, onG
             e.currentTarget.style.boxShadow = '0 8px 20px rgba(244, 63, 94, 0.3)';
           }}
         >
-          <span style={{ textAlign: 'center', lineHeight: 1.2, fontSize: '1.05rem', fontWeight: 800 }}>AI의 도움을 받아<br/>탐방하기</span>
+          <span style={{ textAlign: 'center', lineHeight: 1.2, fontSize: '0.95rem', fontWeight: 800 }}>AI 탐방하기</span>
         </button>
       </div>
 
