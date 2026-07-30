@@ -167,7 +167,7 @@ export default function HeritagePopupCard({ heritage, onClose, onStartRoute }) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           {/* Route Action Button */}
           <button
-            onClick={() => onStartRoute(heritage)}
+            onClick={() => onStartRoute({ ...heritage, address: detailedAddress || heritage.address })}
             style={{
               width: '100%',
               background: 'linear-gradient(135deg, #f59e0b, #d97706)',
