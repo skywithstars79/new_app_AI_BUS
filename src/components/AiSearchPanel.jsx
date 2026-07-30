@@ -24,8 +24,12 @@ export default function AiSearchPanel({ onClose, onSubmit, onSelectResult, isSea
 
   // 추천 검색어 무작위 5개 섞기
   const shuffleQueries = () => {
-    const shuffled = [...RECOMMEND_QUERIES].sort(() => 0.5 - Math.random());
-    setVisibleQueries(shuffled.slice(0, 5));
+    const queries = [...RECOMMEND_QUERIES];
+    for (let i = queries.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [queries[i], queries[j]] = [queries[j], queries[i]];
+    }
+    setVisibleQueries(queries.slice(0, 5));
   };
 
   useEffect(() => {

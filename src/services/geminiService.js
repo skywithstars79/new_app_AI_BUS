@@ -64,10 +64,11 @@ ${JSON.stringify(heritageList.map(h => ({ id: h.id, name: h.name, era: h.era, ta
       if (q.includes('선사') && textToMatch.includes('선사')) score += 1;
       if ((q.includes('성') || q.includes('성곽')) && textToMatch.includes('성')) score += 2;
       if ((q.includes('능') || q.includes('무덤') || q.includes('묘')) && (textToMatch.includes('왕릉') || textToMatch.includes('묘') || textToMatch.includes('릉'))) score += 3;
-      if ((q.includes('절') || q.includes('사찰') || q.includes('불교') || q.includes('사지')) && (textToMatch.includes('사찰') || textToMatch.includes('절') || textToMatch.includes('사지'))) score += 2;
+      if ((q.includes('절') || q.includes('사찰') || q.includes('불교') || q.includes('사지')) && (textToMatch.includes('사찰') || textToMatch.includes('사지') || textToMatch.includes('암'))) score += 2;
       if (q.includes('탑') && textToMatch.includes('탑')) score += 2;
       
-      if (q.includes('산') && (textToMatch.includes('산') || textToMatch.includes('봉수') || textToMatch.includes('산성'))) score += 1;
+      // '산책'이라는 단어가 '산'으로 오인되는 것을 방지
+      if ((q.includes('산') || q.includes('등산')) && !q.includes('산책') && (textToMatch.includes('산') || textToMatch.includes('봉수') || textToMatch.includes('산성'))) score += 1;
       if ((q.includes('아이') || q.includes('체험') || q.includes('가족')) && (textToMatch.includes('박물관') || textToMatch.includes('체험') || textToMatch.includes('학교') || textToMatch.includes('공원'))) score += 2;
 
       // 3. 도보/거리 조건
@@ -76,9 +77,15 @@ ${JSON.stringify(heritageList.map(h => ({ id: h.id, name: h.name, era: h.era, ta
         else score -= 10;
       }
 
+      // 동점자(score가 같은 항목) 발생 시 매번 똑같은 항목만 추천되는 것을 막기 위해 미세한 랜덤 소수점(Jitter) 추가
+      if (score > 0) {
+        score += Math.random() * 0.1;
+      }
+
       return { ...h, matchScore: score };
     });
 
+    // 1점 이상(0점 초과)인 항목들만 점수 내림차순으로 정렬
     results = scoredList.filter(h => h.matchScore > 0).sort((a, b) => b.matchScore - a.matchScore);
   }
 
@@ -102,9 +109,14 @@ ${JSON.stringify(heritageList.map(h => ({ id: h.id, name: h.name, era: h.era, ta
     if (sourceList.length > 0) {
       const existingIds = new Set(results.map(r => r.id));
       const remainingList = sourceList.filter(h => !existingIds.has(h.id));
-      const shuffled = remainingList.sort(() => 0.5 - Math.random());
       
-      results = [...results, ...shuffled.slice(0, 3 - results.length)];
+      // Fisher-Yates 셔플 알고리즘으로 무작위성 완벽 보장 (기존의 sort 기반 셔플은 편향이 발생함)
+      for (let i = remainingList.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [remainingList[i], remainingList[j]] = [remainingList[j], remainingList[i]];
+      }
+      
+      results = [...results, ...remainingList.slice(0, 3 - results.length)];
     }
   }
 
