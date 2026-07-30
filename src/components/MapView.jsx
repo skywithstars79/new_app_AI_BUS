@@ -127,22 +127,7 @@ export default function MapView({ userLocation, heritageList, selectedHeritage, 
                 <div style={{ textAlign: 'center', padding: '4px' }}>
                   <span style={{ fontSize: '0.7rem', color: '#f59e0b', fontWeight: 700 }}>{item.era}</span>
                   <h4 style={{ margin: '2px 0 4px 0', fontSize: '0.9rem', color: '#0f172a' }}>{item.name}</h4>
-                  <p style={{ fontSize: '0.75rem', color: '#475569', margin: '0 0 6px 0' }}>{item.address}</p>
-                  <button
-                    onClick={() => onSelectHeritage(item)}
-                    style={{
-                      background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                      border: 'none',
-                      color: '#fff',
-                      borderRadius: '8px',
-                      padding: '4px 10px',
-                      fontSize: '0.75rem',
-                      fontWeight: 600,
-                      cursor: 'pointer'
-                    }}
-                  >
-                    AI 3문장 카드 보기
-                  </button>
+                  <p style={{ fontSize: '0.75rem', color: '#475569', margin: 0 }}>{item.address}</p>
                 </div>
               </Popup>
             </Marker>

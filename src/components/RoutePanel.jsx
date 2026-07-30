@@ -107,7 +107,7 @@ export default function RoutePanel({ heritage, userLocation, onClose }) {
               </div>
 
               <a 
-                href={`https://m.map.kakao.com/actions/routeView?startLoc=내위치&startY=${userLocation.lat}&startX=${userLocation.lng}&endLoc=${encodeURIComponent(heritage.address || heritage.name)}&endY=${heritage.lat}&endX=${heritage.lng}&routeMode=walk`} 
+                href={`https://map.kakao.com/link/to/${encodeURIComponent(heritage.address || heritage.name)},${heritage.lat},${heritage.lng}`} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 style={{
@@ -117,14 +117,25 @@ export default function RoutePanel({ heritage, userLocation, onClose }) {
                   marginTop: '4px'
                 }}
               >
-                <MapPin size={18} /> 카카오맵 웹 길찾기 (도보 다이렉트)
+                <MapPin size={18} /> 카카오맵 웹 길찾기 (PC권장)
+              </a>
+
+              <a 
+                href={`kakaomap://route?sp=${userLocation.lat},${userLocation.lng}&ep=${heritage.lat},${heritage.lng}&by=FOOT&eName=${encodeURIComponent(heritage.address || heritage.name)}`}
+                style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                  background: '#047857', color: '#ffffff', textDecoration: 'none', padding: '10px',
+                  borderRadius: '8px', fontWeight: 800, fontSize: '0.9rem'
+                }}
+              >
+                <Footprints size={18} /> 카카오맵 앱 길찾기 (도보 다이렉트)
               </a>
             </div>
           ) : (
             /* TRANSPORT MODE */
             <div style={{ display: 'flex', gap: '8px', flexDirection: 'column' }}>
               <a
-                href={routeData.kakaoMapUrl}
+                href={`https://map.kakao.com/link/to/${encodeURIComponent(heritage.address || heritage.name)},${heritage.lat},${heritage.lng}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -133,19 +144,17 @@ export default function RoutePanel({ heritage, userLocation, onClose }) {
                   borderRadius: '8px', fontWeight: 800, fontSize: '0.9rem'
                 }}
               >
-                <Bus size={18} /> 카카오맵 대중교통 길찾기
+                <Bus size={18} /> 카카오맵 웹 길찾기 (PC권장)
               </a>
               <a
-                href={routeData.kakaoNaviUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`kakaomap://route?sp=${userLocation.lat},${userLocation.lng}&ep=${heritage.lat},${heritage.lng}&by=PUBLICTRANSIT&eName=${encodeURIComponent(heritage.address || heritage.name)}`}
                 style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-                  background: '#38bdf8', color: '#0369a1', textDecoration: 'none', padding: '10px',
+                  background: '#f59e0b', color: '#ffffff', textDecoration: 'none', padding: '10px',
                   borderRadius: '8px', fontWeight: 800, fontSize: '0.9rem'
                 }}
               >
-                <Car size={18} /> 카카오내비 자동차 길찾기
+                <Car size={18} /> 카카오맵 앱 길찾기 (대중교통 다이렉트)
               </a>
             </div>
           )}
