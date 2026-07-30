@@ -27,7 +27,7 @@ export default function RoutePanel({ heritage, userLocation, onClose }) {
       {/* Panel Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <span 
+          <span
             style={{
               background: isWalking ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #f59e0b, #d97706)',
               color: '#fff',
@@ -69,7 +69,7 @@ export default function RoutePanel({ heritage, userLocation, onClose }) {
 
       {/* Main Content Info */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center' }}>
-        
+
         {/* Destination Title */}
         <div style={{ flex: '1 1 200px' }}>
           <span style={{ fontSize: '0.75rem', color: '#d97706', fontWeight: 700 }}>목적지</span>
@@ -105,9 +105,9 @@ export default function RoutePanel({ heritage, userLocation, onClose }) {
                   </div>
                 </div>
               </div>
-              
+
               <a 
-                href={routeData.kakaoMapUrl} 
+                href={`https://m.map.kakao.com/actions/routeView?startLoc=내위치&startY=${userLocation.lat}&startX=${userLocation.lng}&endLoc=${encodeURIComponent(heritage.address || heritage.name)}&endY=${heritage.lat}&endX=${heritage.lng}&routeMode=walk`} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 style={{
@@ -117,15 +117,15 @@ export default function RoutePanel({ heritage, userLocation, onClose }) {
                   marginTop: '4px'
                 }}
               >
-                <MapPin size={18} /> 카카오맵 도보 길찾기
+                <MapPin size={18} /> 카카오맵 웹 길찾기 (도보 다이렉트)
               </a>
             </div>
           ) : (
             /* TRANSPORT MODE */
             <div style={{ display: 'flex', gap: '8px', flexDirection: 'column' }}>
-              <a 
-                href={routeData.kakaoMapUrl} 
-                target="_blank" 
+              <a
+                href={routeData.kakaoMapUrl}
+                target="_blank"
                 rel="noopener noreferrer"
                 style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
@@ -135,9 +135,9 @@ export default function RoutePanel({ heritage, userLocation, onClose }) {
               >
                 <Bus size={18} /> 카카오맵 대중교통 길찾기
               </a>
-              <a 
-                href={routeData.kakaoNaviUrl} 
-                target="_blank" 
+              <a
+                href={routeData.kakaoNaviUrl}
+                target="_blank"
                 rel="noopener noreferrer"
                 style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
