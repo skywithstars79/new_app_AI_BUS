@@ -128,7 +128,7 @@ export default function RoutePanel({ heritage, userLocation, onClose }) {
                   borderRadius: '8px', fontWeight: 800, fontSize: '0.9rem'
                 }}
               >
-                <Footprints size={18} /> 카카오맵 앱 길찾기 (도보 다이렉트)
+                <Footprints size={18} /> 카카오맵 앱 길찾기 (모바일권장)
               </a>
             </div>
           ) : (
@@ -154,7 +154,7 @@ export default function RoutePanel({ heritage, userLocation, onClose }) {
                   borderRadius: '8px', fontWeight: 800, fontSize: '0.9rem'
                 }}
               >
-                <Car size={18} /> 카카오맵 앱 길찾기 (대중교통 다이렉트)
+                <Car size={18} /> 카카오맵 앱 길찾기 (모바일권장)
               </a>
             </div>
           )}
