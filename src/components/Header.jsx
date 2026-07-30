@@ -20,7 +20,7 @@ export default function Header({ onSearch, onOpenApiKeyModal, isAiSearching, onG
     }}>
 
       {/* 1. LEFT COLUMN: Brand (HTML 텍스트 로고 원복) */}
-      <div style={{ flex: '1 1 200px', minWidth: '200px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+      <div style={{ flex: '0 0 auto', display: 'flex', alignItems: 'center', gap: '10px' }}>
         <div style={{
           width: '44px',
           height: '44px',
@@ -49,7 +49,7 @@ export default function Header({ onSearch, onOpenApiKeyModal, isAiSearching, onG
 
       {/* 2. CENTER COLUMN: City Selector (가변 너비, 가로 스크롤 허용) */}
       <div style={{
-        flex: '2 1 300px', // 공간이 부족하면 압축되도록
+        flex: '1 1 auto', // 남는 가로 공간을 100% 흡수하여 PC에서 스크롤 없이 다 보이게 함
         minWidth: 0, // Flex 자식 요소가 부모 너비를 넘어가는 버그 방지
         overflow: 'hidden', // 스크롤바가 부모를 뚫지 못하게 컷팅
         background: 'rgba(241, 245, 249, 0.6)', 
