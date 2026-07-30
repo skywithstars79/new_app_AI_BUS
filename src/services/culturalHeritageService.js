@@ -249,7 +249,18 @@ export async function fetchGyeonggiAllHeritageXmlData() {
       const item = items[i];
       const name = item.getElementsByTagName('ccbaMnm1')[0]?.textContent || '문화유산';
       const adminName = item.getElementsByTagName('ccbaAdmin')[0]?.textContent || '경기도';
-      const lcad = item.getElementsByTagName('ccbaLcad')[0]?.textContent || '';
+      // ccbaLcad 내부의 CDATA 섹션까지 확실하게 읽기 위한 처리
+      const lcadNode = item.getElementsByTagName('ccbaLcad')[0];
+      let lcad = '';
+      if (lcadNode) {
+        // childNodes를 순회하여 CDATASection 또는 TextNode의 값을 결합
+        for (let j = 0; j < lcadNode.childNodes.length; j++) {
+          lcad += lcadNode.childNodes[j].nodeValue || '';
+        }
+        lcad = lcad.trim();
+      }
+      // 그래도 없다면 textContent 사용
+      if (!lcad && lcadNode) lcad = lcadNode.textContent || '';
       
       // 이름, 주소, 관리자 중 '***'가 포함되어 있으면 필터링 (완전 제외)
       if (name.includes('***') || adminName.includes('***') || lcad.includes('***')) {
