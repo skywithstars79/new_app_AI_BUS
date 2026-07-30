@@ -219,7 +219,11 @@ export default function AiSearchPanel({ onClose, onSubmit, onSelectResult, isSea
               <Sparkles size={20} /> AI 추천 결과
             </div>
             <h2 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#374151', marginBottom: '24px' }}>
-              조건에 딱 맞는 3곳을 찾았어요!
+              {results.exactMatchCount === 3 
+                ? '조건에 딱 맞는 3곳을 찾았어요!' 
+                : results.exactMatchCount > 0 
+                  ? `조건에 맞는 ${results.exactMatchCount}곳과 AI 추천 ${3 - results.exactMatchCount}곳을 찾았어요!`
+                  : '조건에 딱 맞는 곳은 없지만, AI가 3곳을 추천해 드려요!'}
             </h2>
             
             <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>

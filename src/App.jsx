@@ -100,7 +100,7 @@ export default function App() {
       });
 
       const matchedList = await processNaturalLanguageSearch(query, currentList);
-      return matchedList.slice(0, 3); // 3개만 추천 반환
+      return matchedList;
     } catch (error) {
       console.error('AI search error:', error);
       return [];

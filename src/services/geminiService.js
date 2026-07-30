@@ -6,6 +6,8 @@ export async function processNaturalLanguageSearch(query, heritageList) {
   if (!query || query.trim() === '') return heritageList;
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
 
+  let results = [];
+
   // Gemini API Key가 입력되었을 경우 실제 API 호출
   if (apiKey && apiKey.trim().length > 10) {
     try {
@@ -32,47 +34,50 @@ ${JSON.stringify(heritageList.map(h => ({ id: h.id, name: h.name, era: h.era, ta
       const jsonMatch = responseText.match(/\[.*\]/s);
       if (jsonMatch) {
         const matchedIds = JSON.parse(jsonMatch[0]);
-        const filtered = heritageList.filter(h => matchedIds.includes(h.id));
-        if (filtered.length > 0) return filtered;
+        results = heritageList.filter(h => matchedIds.includes(h.id));
       }
     } catch (err) {
       console.warn('Gemini API Fetch failed, fallback to local NLP rule:', err);
     }
   }
 
-  // Fallback 스마트 로컬 자연어 필터링
-  const q = query.toLowerCase();
-  const keywords = q.split(/\s+/).filter(w => w.length > 1); // 2글자 이상 단어 추출
+  // Gemini가 결과를 못 찾았거나 실패한 경우 Fallback 스마트 로컬 자연어 필터링
+  if (results.length === 0) {
+    const q = query.toLowerCase();
+    const keywords = q.split(/\s+/).filter(w => w.length > 1); // 2글자 이상 단어 추출
 
-  let results = heritageList.filter(h => {
-    const tagsStr = h.tags ? h.tags.join(' ') : '';
-    const textToMatch = `${h.name} ${h.era} ${h.category} ${h.summary} ${tagsStr}`.toLowerCase();
-    
-    // 1. 키워드 매칭
-    const hasKeyword = keywords.some(kw => textToMatch.includes(kw));
+    results = heritageList.filter(h => {
+      const tagsStr = h.tags ? h.tags.join(' ') : '';
+      const textToMatch = `${h.name} ${h.era} ${h.category} ${h.summary} ${tagsStr}`.toLowerCase();
+      
+      // 1. 키워드 매칭
+      const hasKeyword = keywords.some(kw => textToMatch.includes(kw));
 
-    // 2. 특정 테마 룰 기반 매칭
-    let hasRule = false;
-    if (q.includes('조선') && textToMatch.includes('조선')) hasRule = true;
-    if (q.includes('삼국') && textToMatch.includes('삼국')) hasRule = true;
-    if (q.includes('선사') && textToMatch.includes('선사')) hasRule = true;
-    if ((q.includes('성') || q.includes('성곽')) && textToMatch.includes('성')) hasRule = true;
-    if ((q.includes('능') || q.includes('무덤')) && textToMatch.includes('왕릉')) hasRule = true;
-    if ((q.includes('절') || q.includes('사찰')) && textToMatch.includes('사찰')) hasRule = true;
+      // 2. 특정 테마 룰 기반 매칭
+      let hasRule = false;
+      if (q.includes('조선') && textToMatch.includes('조선')) hasRule = true;
+      if (q.includes('삼국') && textToMatch.includes('삼국')) hasRule = true;
+      if (q.includes('선사') && textToMatch.includes('선사')) hasRule = true;
+      if ((q.includes('성') || q.includes('성곽')) && textToMatch.includes('성')) hasRule = true;
+      if ((q.includes('능') || q.includes('무덤')) && textToMatch.includes('왕릉')) hasRule = true;
+      if ((q.includes('절') || q.includes('사찰')) && textToMatch.includes('사찰')) hasRule = true;
 
-    if (q.includes('산') && (textToMatch.includes('산') || textToMatch.includes('봉수') || textToMatch.includes('산성'))) hasRule = true;
-    if ((q.includes('아이') || q.includes('체험') || q.includes('가족')) && (textToMatch.includes('박물관') || textToMatch.includes('체험') || textToMatch.includes('학교') || textToMatch.includes('공원'))) hasRule = true;
+      if (q.includes('산') && (textToMatch.includes('산') || textToMatch.includes('봉수') || textToMatch.includes('산성'))) hasRule = true;
+      if ((q.includes('아이') || q.includes('체험') || q.includes('가족')) && (textToMatch.includes('박물관') || textToMatch.includes('체험') || textToMatch.includes('학교') || textToMatch.includes('공원'))) hasRule = true;
 
-    // 3. 도보/거리 조건
-    let isDistanceOk = true;
-    if (q.includes('걸어가') || q.includes('도보') || q.includes('가까운')) {
-      if (h.distanceKm > 2.5) isDistanceOk = false;
-    }
+      // 3. 도보/거리 조건
+      let isDistanceOk = true;
+      if (q.includes('걸어가') || q.includes('도보') || q.includes('가까운')) {
+        if (h.distanceKm > 2.5) isDistanceOk = false;
+      }
 
-    return (hasKeyword || hasRule) && isDistanceOk;
-  });
+      return (hasKeyword || hasRule) && isDistanceOk;
+    });
+  }
 
   // 검색 결과가 부족하면 무작위로 섞어서 추천 (매번 똑같은 것 방지)
+  const exactMatchCount = Math.min(results.length, 3);
+
   if (results.length < 3) {
     let sourceList = heritageList;
     
@@ -117,6 +122,7 @@ ${JSON.stringify(heritageList.map(h => ({ id: h.id, name: h.name, era: h.era, ta
     console.warn('Failed to load detail images in NLP service', err);
   }
 
+  results.exactMatchCount = exactMatchCount;
   return results;
 }
 
