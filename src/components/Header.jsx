@@ -65,8 +65,8 @@ export default function Header({ onSearch, onOpenApiKeyModal, isAiSearching, onG
         />
       </div>
 
-      {/* 3. RIGHT COLUMN: Main AI Action & Home Button (가변 너비 및 크기 축소) */}
-      <div style={{ flex: '1 1 280px', display: 'flex', flexDirection: 'row', gap: '8px', alignItems: 'stretch' }}>
+      {/* 3. RIGHT COLUMN: Main AI Action & Home Button (폭 대폭 축소) */}
+      <div style={{ flex: '0 0 140px', display: 'flex', flexDirection: 'row', gap: '6px', alignItems: 'stretch' }}>
         
         {/* Home Button (축소) */}
         <button
@@ -125,7 +125,7 @@ export default function Header({ onSearch, onOpenApiKeyModal, isAiSearching, onG
             e.currentTarget.style.boxShadow = '0 8px 20px rgba(244, 63, 94, 0.3)';
           }}
         >
-          <span style={{ textAlign: 'center', lineHeight: 1.2, fontSize: '0.95rem', fontWeight: 800 }}>AI 탐방하기</span>
+          <span style={{ textAlign: 'center', lineHeight: 1.2, fontSize: '0.9rem', fontWeight: 800 }}>AI 탐방</span>
         </button>
       </div>
 

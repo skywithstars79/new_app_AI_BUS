@@ -38,7 +38,7 @@ export default function CitySelector({ selectedCityId, onSelectCity }) {
                 color: isSelected ? '#ffffff' : '#047857',
                 borderRadius: '20px',
                 width: '64px',
-                height: '56px', // 1줄 높이에 맞게 대폭 축소
+                height: '74px', // 2줄 34px 버튼에 맞게 축소 (34*2 + 6)
                 fontSize: '0.75rem', 
                 fontWeight: 800,
                 cursor: 'pointer',
@@ -70,10 +70,10 @@ export default function CitySelector({ selectedCityId, onSelectCity }) {
           );
         })}
 
-        {/* 나머지 지역: 1줄 가로 스크롤(높이 최소화) */}
+        {/* 나머지 지역: 2줄 가로 스크롤(높이 최소화형 텍스트 버튼) */}
         <div style={{ 
           display: 'grid', 
-          gridTemplateRows: '1fr', // 2줄에서 1줄로 변경하여 높이 절반으로 단축
+          gridTemplateRows: 'repeat(2, 1fr)', // 다시 2줄로 변경하되 버튼 높이를 깎음
           gridAutoFlow: 'column', 
           gap: '6px',
           alignItems: 'center'
@@ -93,16 +93,14 @@ export default function CitySelector({ selectedCityId, onSelectCity }) {
                     : '1.5px solid #e2e8f0',
                   color: isSelected ? '#ffffff' : '#475569',
                   borderRadius: '16px',
-                  width: '50px', // 가로 50px 축소
-                  height: '50px', // 세로 50px 축소
-                  fontSize: '0.7rem', // 폰트 축소
+                  width: '60px',
+                  height: '34px', // 아이콘이 빠진 만큼 높이를 획기적으로 축소
+                  fontSize: '0.75rem', 
                   fontWeight: isSelected ? 800 : 700,
                   cursor: 'pointer',
                   display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
+                  alignItems: 'center', // 세로 정렬(column 제외)
                   justifyContent: 'center',
-                  gap: '4px',
                   boxShadow: isSelected ? '0 4px 10px rgba(245, 158, 11, 0.35)' : '0 1px 4px rgba(0,0,0,0.04)',
                   transition: 'all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1)',
                   flexShrink: 0
@@ -120,7 +118,7 @@ export default function CitySelector({ selectedCityId, onSelectCity }) {
                   }
                 }}
               >
-                <MapPin size={14} color={isSelected ? '#fff' : '#94a3b8'} />
+                {/* 아이콘(MapPin) 삭제됨 */}
                 <span>{city.name}</span>
               </button>
             );
