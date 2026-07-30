@@ -235,8 +235,8 @@ export function calculateDistance(lat1, lon1, lat2, lon2) {
  */
 export async function fetchGyeonggiAllHeritageXmlData() {
   try {
-    // pageUnit을 3000으로 넉넉하게 주어 경기도 전체 문화유산(약 1000여 개) 누락 없이 호출
-    const url = `https://www.khs.go.kr/cha/SearchKindOpenapiList.do?pageUnit=3000&ccbaCncl=N&ccbaCtcd=31`;
+    // pageUnit을 500으로 설정하여 초기 로딩 속도 및 DOM 파싱 병목을 해결 (핵심 500개 우선 수집)
+    const url = `https://www.khs.go.kr/cha/SearchKindOpenapiList.do?pageUnit=500&ccbaCncl=N&ccbaCtcd=31`;
     const res = await fetch(url);
     const xmlText = await res.text();
 
