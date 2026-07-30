@@ -37,9 +37,9 @@ export default function CitySelector({ selectedCityId, onSelectCity }) {
                   : '1.5px solid #a7f3d0',
                 color: isSelected ? '#ffffff' : '#047857',
                 borderRadius: '20px',
-                width: '84px', // 너비 원복
-                height: '144px', // 나머지 버튼들 68px 높이 2줄 (68*2 + 8)에 정확히 맞춤
-                fontSize: '0.88rem', // 폰트 약간 확대
+                width: '64px', // 너비 축소
+                height: '108px', // 50*2 + 8
+                fontSize: '0.75rem', 
                 fontWeight: 800,
                 cursor: 'pointer',
                 display: 'flex',
@@ -64,8 +64,8 @@ export default function CitySelector({ selectedCityId, onSelectCity }) {
                 }
               }}
             >
-              <Navigation size={22} color={isSelected ? '#fff' : '#059669'} />
-              <span style={{ textAlign: 'center', lineHeight: 1.25 }}>내 주변<br/>(5km)</span>
+              <Navigation size={18} color={isSelected ? '#fff' : '#059669'} />
+              <span style={{ textAlign: 'center', lineHeight: 1.2 }}>내 주변<br/>(5km)</span>
             </button>
           );
         })}
@@ -93,9 +93,9 @@ export default function CitySelector({ selectedCityId, onSelectCity }) {
                     : '1.5px solid #e2e8f0',
                   color: isSelected ? '#ffffff' : '#475569',
                   borderRadius: '16px',
-                  width: '68px', // 가로 68px 복구
-                  height: '68px', // 세로도 동일하게 68px로 늘려 정사각형 비율 복구
-                  fontSize: '0.85rem', // 폰트 살짝 더 확대
+                  width: '50px', // 가로 50px 축소
+                  height: '50px', // 세로 50px 축소
+                  fontSize: '0.7rem', // 폰트 축소
                   fontWeight: isSelected ? 800 : 700,
                   cursor: 'pointer',
                   display: 'flex',
@@ -120,7 +120,7 @@ export default function CitySelector({ selectedCityId, onSelectCity }) {
                   }
                 }}
               >
-                <MapPin size={16} color={isSelected ? '#fff' : '#94a3b8'} />
+                <MapPin size={14} color={isSelected ? '#fff' : '#94a3b8'} />
                 <span>{city.name}</span>
               </button>
             );

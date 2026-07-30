@@ -15,31 +15,45 @@ export default function Header({ onSearch, onOpenApiKeyModal, isAiSearching, onG
       boxShadow: '0 10px 40px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0,0,0,0.05)',
       display: 'flex',
       alignItems: 'stretch',
-      gap: '20px'
+      flexWrap: 'wrap', // 모바일에서 줄바꿈 허용
+      gap: '16px'
     }}>
 
-      {/* 1. LEFT COLUMN: Brand (User Custom Logo Only) */}
-      <div style={{ flex: '0 0 320px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 10px' }}>
-        <img 
-          src="/user_custom_logo.png" 
-          alt="AI 문화재 탐방버스" 
-          style={{ 
-            width: '100%', 
-            height: '100%',
-            objectFit: 'contain',
-            mixBlendMode: 'multiply', // 흰색 배경 투명화
-            transform: 'scale(1.25)', // 상하좌우 여백을 뚫고 큼지막하게 렌더링
-            transformOrigin: 'center center'
-          }} 
-        />
+      {/* 1. LEFT COLUMN: Brand (HTML 텍스트 로고 원복) */}
+      <div style={{ flex: '1 1 200px', minWidth: '200px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{
+          width: '44px',
+          height: '44px',
+          borderRadius: '14px',
+          background: 'linear-gradient(135deg, #f59e0b, #ea580c)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 4px 10px rgba(234, 88, 12, 0.25)',
+          flexShrink: 0
+        }}>
+          <Bus size={24} color="#ffffff" strokeWidth={2.5} />
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <h1 style={{ 
+            fontSize: '1.2rem', // 모바일을 위해 크기 축소
+            fontWeight: 900, 
+            color: '#1e293b', 
+            margin: 0, 
+            letterSpacing: '-0.5px'
+          }}>
+            AI 문화재 탐방버스
+          </h1>
+        </div>
       </div>
 
-      {/* 2. CENTER COLUMN: City Selector (여백을 활용하는 필터) */}
+      {/* 2. CENTER COLUMN: City Selector (가변 너비) */}
       <div style={{
-        flex: 1,
-        background: 'rgba(241, 245, 249, 0.6)', // 은은한 회색 배경으로 영역 분리
+        flex: '2 1 300px', // 공간이 부족하면 압축되도록
+        minWidth: '250px',
+        background: 'rgba(241, 245, 249, 0.6)', 
         borderRadius: '20px',
-        padding: '12px',
+        padding: '8px', // 모바일 공간 절약을 위해 패딩 축소
         display: 'flex',
         alignItems: 'center',
         border: '1px solid rgba(226, 232, 240, 0.8)'
@@ -50,40 +64,39 @@ export default function Header({ onSearch, onOpenApiKeyModal, isAiSearching, onG
         />
       </div>
 
-      {/* 3. RIGHT COLUMN: Main AI Action & Home Button (가로 배치로 수직 공간 극대화) */}
-      <div style={{ flex: '0 0 420px', display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'stretch' }}>
+      {/* 3. RIGHT COLUMN: Main AI Action & Home Button (가변 너비 및 크기 축소) */}
+      <div style={{ flex: '1 1 280px', display: 'flex', flexDirection: 'row', gap: '8px', alignItems: 'stretch' }}>
         
-        {/* Home Button */}
+        {/* Home Button (축소) */}
         <button
           onClick={onGoHome}
           title="첫 화면으로 돌아가기"
           style={{
-            flex: '0 0 64px', // 아이콘 사이즈 증가에 비례하여 버튼 폭 고정 (정사각형 비율)
+            flex: '0 0 48px', // 폭 대폭 축소
             background: 'linear-gradient(135deg, #fb923c 0%, #f97316 100%)', 
             border: 'none',
             color: '#ffffff',
-            borderRadius: '20px', 
+            borderRadius: '16px', 
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
-            boxShadow: '0 4px 10px rgba(249, 115, 22, 0.3), inset 0 2px 4px rgba(255,255,255,0.2)'
-            // whiteSpace: 'nowrap' 삭제됨
+            boxShadow: '0 4px 8px rgba(249, 115, 22, 0.2)'
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
-            e.currentTarget.style.boxShadow = '0 6px 14px rgba(249, 115, 22, 0.4), inset 0 2px 4px rgba(255,255,255,0.3)';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 6px 12px rgba(249, 115, 22, 0.3)';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateY(0) scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 10px rgba(249, 115, 22, 0.3), inset 0 2px 4px rgba(255,255,255,0.2)';
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 4px 8px rgba(249, 115, 22, 0.2)';
           }}
         >
-          <Home size={32} strokeWidth={2.5} />
+          <Home size={22} strokeWidth={2.5} />
         </button>
 
-        {/* AI Action Button (가로 폭 최적화) */}
+        {/* AI Action Button (폰트 및 여백 축소) */}
         <button
           className="animate-pulse-slow"
           onClick={onOpenAiPanel}
@@ -91,30 +104,27 @@ export default function Header({ onSearch, onOpenApiKeyModal, isAiSearching, onG
             flex: 1, 
             background: 'linear-gradient(135deg, #f43f5e 0%, #8b5cf6 100%)', 
             border: 'none',
-            borderRadius: '20px',
+            borderRadius: '16px',
             color: '#ffffff',
-            fontSize: '1.05rem', 
-            fontWeight: 900,
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             gap: '8px', 
-            boxShadow: '0 10px 25px rgba(244, 63, 94, 0.4), inset 0 2px 4px rgba(255,255,255,0.2)',
-            transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
-            textShadow: '0 2px 4px rgba(0,0,0,0.15)'
-            // whiteSpace: 'nowrap' 삭제됨
+            padding: '8px 12px',
+            boxShadow: '0 8px 20px rgba(244, 63, 94, 0.3)',
+            transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)'
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
-            e.currentTarget.style.boxShadow = '0 12px 30px rgba(244, 63, 94, 0.45), inset 0 2px 4px rgba(255,255,255,0.3)';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 10px 24px rgba(244, 63, 94, 0.4)';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateY(0) scale(1)';
-            e.currentTarget.style.boxShadow = '0 10px 25px rgba(244, 63, 94, 0.4), inset 0 2px 4px rgba(255,255,255,0.2)';
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 8px 20px rgba(244, 63, 94, 0.3)';
           }}
         >
-          <span style={{ textAlign: 'center', lineHeight: 1.15, fontSize: '1.7rem' }}>AI의 도움을 받아<br/>탐방하기</span>
+          <span style={{ textAlign: 'center', lineHeight: 1.2, fontSize: '1.05rem', fontWeight: 800 }}>AI의 도움을 받아<br/>탐방하기</span>
         </button>
       </div>
 
