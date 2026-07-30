@@ -118,8 +118,8 @@ export default function App() {
     setViewMode('DETAIL');
 
     // 선택된 문화유산의 지역(City)으로 CitySelector(필터) 자동 변경
-    if (heritage.cityName) {
-      const cityObj = GYEONGGI_CITIES.find(c => c.name === heritage.cityName);
+    if (heritage.cityId) {
+      const cityObj = GYEONGGI_CITIES.find(c => c.id === heritage.cityId);
       if (cityObj) {
         setSelectedCityId(cityObj.id);
         const filtered = filterHeritages({

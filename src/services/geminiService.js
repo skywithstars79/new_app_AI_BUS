@@ -46,37 +46,45 @@ ${JSON.stringify(heritageList.map(h => ({ id: h.id, name: h.name, era: h.era, ta
     const q = query.toLowerCase();
     const keywords = q.split(/\s+/).filter(w => w.length > 1); // 2글자 이상 단어 추출
 
-    results = heritageList.filter(h => {
+    const scoredList = heritageList.map(h => {
       const tagsStr = h.tags ? h.tags.join(' ') : '';
       const textToMatch = `${h.name} ${h.era} ${h.category} ${h.summary} ${tagsStr}`.toLowerCase();
       
-      // 1. 키워드 매칭
-      const hasKeyword = keywords.some(kw => textToMatch.includes(kw));
+      let score = 0;
+      
+      // 1. 키워드 매칭 (많이 일치할수록 높은 점수)
+      keywords.forEach(kw => {
+        if (textToMatch.includes(kw)) score += 1;
+      });
 
-      // 2. 특정 테마 룰 기반 매칭
-      let hasRule = false;
-      if (q.includes('조선') && textToMatch.includes('조선')) hasRule = true;
-      if (q.includes('삼국') && textToMatch.includes('삼국')) hasRule = true;
-      if (q.includes('선사') && textToMatch.includes('선사')) hasRule = true;
-      if ((q.includes('성') || q.includes('성곽')) && textToMatch.includes('성')) hasRule = true;
-      if ((q.includes('능') || q.includes('무덤')) && textToMatch.includes('왕릉')) hasRule = true;
-      if ((q.includes('절') || q.includes('사찰')) && textToMatch.includes('사찰')) hasRule = true;
-
-      if (q.includes('산') && (textToMatch.includes('산') || textToMatch.includes('봉수') || textToMatch.includes('산성'))) hasRule = true;
-      if ((q.includes('아이') || q.includes('체험') || q.includes('가족')) && (textToMatch.includes('박물관') || textToMatch.includes('체험') || textToMatch.includes('학교') || textToMatch.includes('공원'))) hasRule = true;
+      // 2. 특정 테마 룰 기반 매칭 (가중치 부여)
+      if (q.includes('조선') && textToMatch.includes('조선')) score += 1;
+      if (q.includes('고려') && textToMatch.includes('고려')) score += 1;
+      if (q.includes('삼국') && textToMatch.includes('삼국')) score += 1;
+      if (q.includes('선사') && textToMatch.includes('선사')) score += 1;
+      if ((q.includes('성') || q.includes('성곽')) && textToMatch.includes('성')) score += 2;
+      if ((q.includes('능') || q.includes('무덤') || q.includes('묘')) && (textToMatch.includes('왕릉') || textToMatch.includes('묘') || textToMatch.includes('릉'))) score += 3;
+      if ((q.includes('절') || q.includes('사찰') || q.includes('불교') || q.includes('사지')) && (textToMatch.includes('사찰') || textToMatch.includes('절') || textToMatch.includes('사지'))) score += 2;
+      if (q.includes('탑') && textToMatch.includes('탑')) score += 2;
+      
+      if (q.includes('산') && (textToMatch.includes('산') || textToMatch.includes('봉수') || textToMatch.includes('산성'))) score += 1;
+      if ((q.includes('아이') || q.includes('체험') || q.includes('가족')) && (textToMatch.includes('박물관') || textToMatch.includes('체험') || textToMatch.includes('학교') || textToMatch.includes('공원'))) score += 2;
 
       // 3. 도보/거리 조건
-      let isDistanceOk = true;
       if (q.includes('걸어가') || q.includes('도보') || q.includes('가까운')) {
-        if (h.distanceKm > 2.5) isDistanceOk = false;
+        if (h.distanceKm <= 2.5) score += 2;
+        else score -= 10;
       }
 
-      return (hasKeyword || hasRule) && isDistanceOk;
+      return { ...h, matchScore: score };
     });
+
+    results = scoredList.filter(h => h.matchScore > 0).sort((a, b) => b.matchScore - a.matchScore);
   }
 
   // 검색 결과가 부족하면 무작위로 섞어서 추천 (매번 똑같은 것 방지)
   const exactMatchCount = Math.min(results.length, 3);
+  results = results.slice(0, 3);
 
   if (results.length < 3) {
     let sourceList = heritageList;
@@ -92,14 +100,12 @@ ${JSON.stringify(heritageList.map(h => ({ id: h.id, name: h.name, era: h.era, ta
     }
 
     if (sourceList.length > 0) {
-      // 섞을 때 결과를 덮어쓰기 위해 중복 제거
-      const shuffled = [...sourceList].sort(() => 0.5 - Math.random());
-      results = shuffled.slice(0, 3);
+      const existingIds = new Set(results.map(r => r.id));
+      const remainingList = sourceList.filter(h => !existingIds.has(h.id));
+      const shuffled = remainingList.sort(() => 0.5 - Math.random());
+      
+      results = [...results, ...shuffled.slice(0, 3 - results.length)];
     }
-  } else {
-    // 결과가 3개 이상이면 무작위 3개 추출 (또는 상위 3개)
-    const shuffledResults = [...results].sort(() => 0.5 - Math.random());
-    results = shuffledResults.slice(0, 3);
   }
 
   // 동적 모듈 임포트: culturalHeritageService에서 상세 이미지 및 주소 가져오기
