@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Bus, Footprints, Clock, Flame, Car } from 'lucide-react';
+import { X, Bus, Footprints, Clock, Flame, Car, MapPin } from 'lucide-react';
 import { getRouteInformation } from '../services/busRouteService';
 
 export default function RoutePanel({ heritage, userLocation, onClose }) {
@@ -85,24 +85,40 @@ export default function RoutePanel({ heritage, userLocation, onClose }) {
         <div style={{ flex: '1 1 300px', background: 'rgba(15, 23, 42, 0.7)', borderRadius: '12px', padding: '12px 16px', border: '1px solid rgba(255,255,255,0.08)' }}>
           {isWalking ? (
             /* WALKING MODE */
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <Clock size={14} color="#10b981" /> 예상 소요 시간
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <Clock size={14} color="#10b981" /> 예상 소요 시간
+                  </div>
+                  <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#34d399' }}>
+                    약 {routeData.walkMinutes}분
+                  </div>
                 </div>
-                <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#34d399' }}>
-                  약 {routeData.walkMinutes}분
+                <div style={{ width: '1px', height: '36px', background: 'rgba(255,255,255,0.1)' }} />
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <Flame size={14} color="#f43f5e" /> 운동 소비 칼로리
+                  </div>
+                  <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#fb7185' }}>
+                    약 {routeData.calories} kcal
+                  </div>
                 </div>
               </div>
-              <div style={{ width: '1px', height: '36px', background: 'rgba(255,255,255,0.1)' }} />
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <Flame size={14} color="#f43f5e" /> 운동 소비 칼로리
-                </div>
-                <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#fb7185' }}>
-                  약 {routeData.calories} kcal
-                </div>
-              </div>
+              
+              <a 
+                href={routeData.kakaoMapUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                  background: '#10b981', color: '#ffffff', textDecoration: 'none', padding: '10px',
+                  borderRadius: '8px', fontWeight: 800, fontSize: '0.9rem',
+                  marginTop: '4px'
+                }}
+              >
+                <MapPin size={18} /> 카카오맵 도보 길찾기
+              </a>
             </div>
           ) : (
             /* TRANSPORT MODE */
