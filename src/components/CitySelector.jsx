@@ -20,7 +20,7 @@ export default function CitySelector({ selectedCityId, onSelectCity }) {
         <span>탐방지 선택</span>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: 1 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, minWidth: 0, overflowX: 'auto', paddingBottom: '4px' }}>
         {/* 특별 버튼: 내 주변 (5km) */}
         {GYEONGGI_CITIES.filter(c => c.id === 'all').map((city) => {
           const isSelected = selectedCityId === city.id;

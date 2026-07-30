@@ -47,13 +47,14 @@ export default function Header({ onSearch, onOpenApiKeyModal, isAiSearching, onG
         </div>
       </div>
 
-      {/* 2. CENTER COLUMN: City Selector (가변 너비) */}
+      {/* 2. CENTER COLUMN: City Selector (가변 너비, 가로 스크롤 허용) */}
       <div style={{
         flex: '2 1 300px', // 공간이 부족하면 압축되도록
-        minWidth: '250px',
+        minWidth: 0, // Flex 자식 요소가 부모 너비를 넘어가는 버그 방지
+        overflow: 'hidden', // 스크롤바가 부모를 뚫지 못하게 컷팅
         background: 'rgba(241, 245, 249, 0.6)', 
         borderRadius: '20px',
-        padding: '8px', // 모바일 공간 절약을 위해 패딩 축소
+        padding: '8px', 
         display: 'flex',
         alignItems: 'center',
         border: '1px solid rgba(226, 232, 240, 0.8)'
