@@ -19,7 +19,8 @@ export default function Home({ onSelectAiSearch, onSelectRegionSearch, onSelectA
       alignItems: 'center',
       justifyContent: 'center',
       position: 'relative',
-      overflow: 'hidden',
+      overflowY: 'auto', // 세로 스크롤 허용하여 어떤 기기에서도 잘림 방지
+      padding: '20px 0' // 위아래 최소 여백
     }}>
       {/* 부드러운 장식용 파스텔 덩어리들 */}
       <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '300px', height: '300px', background: '#fce4ec', borderRadius: '50%', filter: 'blur(50px)', opacity: 0.8 }} />
@@ -44,15 +45,15 @@ export default function Home({ onSelectAiSearch, onSelectRegionSearch, onSelectA
           <Sparkles size={16} /> 신나는 경기도 문화유산 AI 탐방 버스
         </div>
 
-        {/* 사용자 커스텀 로고 큼지막하게 추가 */}
-        <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: '32px' }} className="animate-fade-in">
+        {/* 사용자 커스텀 로고 큼지막하게 추가 (세로 높이 제한으로 다이어트) */}
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: '12px' }} className="animate-fade-in">
           <img 
             src="/user_custom_logo.png" 
             alt="AI 문화재 탐방버스 로고" 
             style={{ 
               width: '100%',
-              maxWidth: '800px', // 엄청나게 크게 키움
-              maxHeight: '350px', // 위아래 제한도 크게 풂
+              maxWidth: '800px', // 가로는 넓게 유지
+              maxHeight: '220px', // 세로 폭발 방지 (350px -> 220px 대폭 축소)
               objectFit: 'contain',
               mixBlendMode: 'multiply', // 다시 multiply로
               filter: 'contrast(1.1) brightness(1.05)' // 이미지 자체의 칙칙한 하얀 노이즈를 완전 흰색으로 만들어 투명화가 100% 되도록 강제함
@@ -63,7 +64,7 @@ export default function Home({ onSelectAiSearch, onSelectRegionSearch, onSelectA
         <h1 style={{ fontSize: '2.5rem', fontWeight: 900, color: '#374151', marginBottom: '12px', letterSpacing: '-0.5px' }}>
           어떤 방식으로 여행을 떠나볼까요?
         </h1>
-        <p style={{ fontSize: '1.05rem', color: '#6b7280', marginBottom: '48px', fontWeight: 500 }}>
+        <p style={{ fontSize: '1.05rem', color: '#6b7280', marginBottom: '24px', fontWeight: 500 }}>
           원하는 취향대로 AI에게 물어보거나, 지도에서 직접 동네를 골라 탐험해 보세요!
         </p>
 
@@ -77,7 +78,7 @@ export default function Home({ onSelectAiSearch, onSelectRegionSearch, onSelectA
               background: 'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)',
               border: 'none',
               borderRadius: '24px',
-              padding: '40px 24px 24px 24px',
+              padding: '24px 20px', // 거대한 패딩(40px) 깎기
               color: '#fff',
               cursor: 'pointer',
               display: 'flex',
@@ -113,7 +114,7 @@ export default function Home({ onSelectAiSearch, onSelectRegionSearch, onSelectA
               background: 'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)',
               border: 'none',
               borderRadius: '24px',
-              padding: '32px 24px',
+              padding: '24px 20px', // 거대한 패딩(32px) 깎기
               color: '#1e293b',
               cursor: 'pointer',
               display: 'flex',
