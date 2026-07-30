@@ -107,7 +107,7 @@ export default function RoutePanel({ heritage, userLocation, onClose }) {
               </div>
 
               <a 
-                href={`https://map.kakao.com/link/to/${encodeURIComponent(heritage.address || heritage.name)},${heritage.lat},${heritage.lng}`} 
+                href={`https://map.kakao.com/?sY=${userLocation.lat}&sX=${userLocation.lng}&eName=${encodeURIComponent(heritage.address || heritage.name)}&eY=${heritage.lat}&eX=${heritage.lng}`} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 style={{
@@ -135,7 +135,7 @@ export default function RoutePanel({ heritage, userLocation, onClose }) {
             /* TRANSPORT MODE */
             <div style={{ display: 'flex', gap: '8px', flexDirection: 'column' }}>
               <a
-                href={`https://map.kakao.com/link/to/${encodeURIComponent(heritage.address || heritage.name)},${heritage.lat},${heritage.lng}`}
+                href={`https://map.kakao.com/?sY=${userLocation.lat}&sX=${userLocation.lng}&eName=${encodeURIComponent(heritage.address || heritage.name)}&eY=${heritage.lat}&eX=${heritage.lng}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
