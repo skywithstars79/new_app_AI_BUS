@@ -61,7 +61,10 @@ ${JSON.stringify(heritageList.map(h => ({ id: h.id, name: h.name, era: h.era, ta
       if (q.includes('조선') && textToMatch.includes('조선')) score += 1;
       if (q.includes('고려') && textToMatch.includes('고려')) score += 1;
       if (q.includes('삼국') && textToMatch.includes('삼국')) score += 1;
-      if (q.includes('선사') && textToMatch.includes('선사')) score += 1;
+      
+      // 선사시대/공룡/화석/고인돌 테마 확장
+      if ((q.includes('선사') || q.includes('오래된') || q.includes('구석기') || q.includes('신석기') || q.includes('청동기') || q.includes('공룡')) && (textToMatch.includes('선사') || textToMatch.includes('구석기') || textToMatch.includes('신석기') || textToMatch.includes('청동기') || textToMatch.includes('고인돌') || textToMatch.includes('화석') || textToMatch.includes('공룡') || textToMatch.includes('주먹도끼'))) score += 3;
+      
       if ((q.includes('성') || q.includes('성곽')) && textToMatch.includes('성')) score += 2;
       if ((q.includes('능') || q.includes('무덤') || q.includes('묘')) && (textToMatch.includes('왕릉') || textToMatch.includes('묘') || textToMatch.includes('릉'))) score += 3;
       if ((q.includes('절') || q.includes('사찰') || q.includes('불교') || q.includes('사지')) && (textToMatch.includes('사찰') || textToMatch.includes('사지') || textToMatch.includes('암'))) score += 2;
