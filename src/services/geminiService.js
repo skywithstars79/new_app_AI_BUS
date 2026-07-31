@@ -79,7 +79,8 @@ ${JSON.stringify(heritageList.map(h => ({ id: h.id, name: h.name, era: h.era, ta
       // 자연/경치/풍경 테마 추가
       if ((q.includes('자연') || q.includes('경치') || q.includes('풍경') || q.includes('힐링')) && (textToMatch.includes('산') || textToMatch.includes('바다') || textToMatch.includes('강') || textToMatch.includes('나무') || textToMatch.includes('숲') || textToMatch.includes('계곡') || textToMatch.includes('자연') || textToMatch.includes('경치') || textToMatch.includes('명승') || textToMatch.includes('천연기념물'))) score += 3;
 
-      if ((q.includes('아이') || q.includes('체험') || q.includes('가족')) && (textToMatch.includes('박물관') || textToMatch.includes('체험') || textToMatch.includes('학교') || textToMatch.includes('공원'))) score += 2;
+      // 아이/가족/체험/나들이 테마 확장
+      if ((q.includes('아이') || q.includes('체험') || q.includes('가족') || q.includes('나들이')) && (textToMatch.includes('박물관') || textToMatch.includes('체험') || textToMatch.includes('학교') || textToMatch.includes('공원') || textToMatch.includes('수장고') || textToMatch.includes('전시관') || textToMatch.includes('관람') || textToMatch.includes('산책') || textToMatch.includes('자연') || textToMatch.includes('교육'))) score += 3;
 
       // 3. 도보/거리 조건
       if (q.includes('걸어가') || q.includes('도보') || q.includes('가까운')) {
