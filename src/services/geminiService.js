@@ -100,8 +100,9 @@ ${JSON.stringify(heritageList.map(h => ({ id: h.id, name: h.name, era: h.era, ta
     results = scoredList.filter(h => h.matchScore > 0).sort((a, b) => b.matchScore - a.matchScore);
   }
 
-  // 검색 결과가 부족하면 무작위로 섞어서 추천 (매번 똑같은 것 방지)
-  const exactMatchCount = Math.min(results.length, 3);
+  // 단순 불용어 매칭(1~2점)을 걸러내고, 의미 있는 매칭(3점 이상)이거나 Gemini API가 찾은 결과(score 없음)만 진짜 매칭으로 인정
+  const meaningfulResults = results.filter(h => h.matchScore === undefined || h.matchScore >= 3);
+  const exactMatchCount = Math.min(meaningfulResults.length, 3);
   results = results.slice(0, 3);
 
   if (results.length < 3) {
