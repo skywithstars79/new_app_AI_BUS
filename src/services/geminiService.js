@@ -72,6 +72,10 @@ ${JSON.stringify(heritageList.map(h => ({ id: h.id, name: h.name, era: h.era, ta
       
       // '산책'이라는 단어가 '산'으로 오인되는 것을 방지
       if ((q.includes('산') || q.includes('등산')) && !q.includes('산책') && (textToMatch.includes('산') || textToMatch.includes('봉수') || textToMatch.includes('산성'))) score += 1;
+      
+      // 자연/경치/풍경 테마 추가
+      if ((q.includes('자연') || q.includes('경치') || q.includes('풍경') || q.includes('힐링')) && (textToMatch.includes('산') || textToMatch.includes('바다') || textToMatch.includes('강') || textToMatch.includes('나무') || textToMatch.includes('숲') || textToMatch.includes('계곡') || textToMatch.includes('자연') || textToMatch.includes('경치') || textToMatch.includes('명승') || textToMatch.includes('천연기념물'))) score += 3;
+
       if ((q.includes('아이') || q.includes('체험') || q.includes('가족')) && (textToMatch.includes('박물관') || textToMatch.includes('체험') || textToMatch.includes('학교') || textToMatch.includes('공원'))) score += 2;
 
       // 3. 도보/거리 조건
