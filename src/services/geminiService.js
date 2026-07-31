@@ -67,6 +67,9 @@ ${JSON.stringify(heritageList.map(h => ({ id: h.id, name: h.name, era: h.era, ta
       if ((q.includes('절') || q.includes('사찰') || q.includes('불교') || q.includes('사지')) && (textToMatch.includes('사찰') || textToMatch.includes('사지') || textToMatch.includes('암'))) score += 2;
       if (q.includes('탑') && textToMatch.includes('탑')) score += 2;
       
+      // 독립운동 및 근대사 테마 추가
+      if ((q.includes('독립') || q.includes('항일') || q.includes('광복') || q.includes('만세') || q.includes('3.1')) && (textToMatch.includes('독립') || textToMatch.includes('항일') || textToMatch.includes('광복') || textToMatch.includes('순국') || textToMatch.includes('의병') || textToMatch.includes('의사'))) score += 3;
+      
       // '산책'이라는 단어가 '산'으로 오인되는 것을 방지
       if ((q.includes('산') || q.includes('등산')) && !q.includes('산책') && (textToMatch.includes('산') || textToMatch.includes('봉수') || textToMatch.includes('산성'))) score += 1;
       if ((q.includes('아이') || q.includes('체험') || q.includes('가족')) && (textToMatch.includes('박물관') || textToMatch.includes('체험') || textToMatch.includes('학교') || textToMatch.includes('공원'))) score += 2;
